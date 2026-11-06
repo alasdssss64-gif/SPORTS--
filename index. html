@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101827">
+<title>عالم الرياضة سبورت</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b1220;color:#fff;font-family:Arial,sans-serif}
+header{background:#101c30;padding:20px 15px;border-bottom:2px solid #16c784}
+.logo{font-size:25px;font-weight:bold;color:#16c784}
+header p{margin:7px 0 0;color:#b8c4d6;font-size:13px}
+nav{display:flex;overflow-x:auto;background:#142238;position:sticky;top:0;z-index:5}
+nav button{background:none;border:0;color:#c5d0df;padding:15px 17px;white-space:nowrap;font-size:14px}
+nav button.active{color:#16c784;border-bottom:3px solid #16c784}
+main{padding:15px;max-width:800px;margin:auto}
+h2{font-size:20px}
+.card{background:#142238;border:1px solid #263952;border-radius:13px;padding:16px;margin:12px 0}
+.card h3{margin-top:0}
+.muted{color:#9eafc4;font-size:13px;line-height:1.7}
+.green{color:#16c784}
+.pill{display:inline-block;background:#203a39;color:#16c784;padding:6px 10px;border-radius:20px;font-size:12px}
+button,select{cursor:pointer}
+select{background:#203149;color:white;border:1px solid #40536b;border-radius:8px;padding:10px;width:100%;margin:8px 0}
+.search{width:100%;padding:12px;border-radius:9px;border:1px solid #40536b;background:#142238;color:white}
+.empty{text-align:center;padding:30px 15px;color:#aab8ca;line-height:2}
+footer{text-align:center;color:#77869a;padding:25px;font-size:12px}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<header>
+ <div class="logo">⚽ عالم الرياضة سبورت</div>
+ <p>كل أخبار ونتائج كرة القدم في مكان واحد</p>
+</header>
+
+<nav id="nav">
+ <button class="active" onclick="showPage('home',this)">الرئيسية</button>
+ <button onclick="showPage('matches',this)">المباريات</button>
+ <button onclick="showPage('leagues',this)">الدوريات</button>
+ <button onclick="showPage('table',this)">الترتيب</button>
+ <button onclick="showPage('news',this)">الأخبار</button>
+ <button onclick="showPage('teams',this)">المنتخبات</button>
+</nav>
+
+<main>
+<section id="home">
+ <h2>الرئيسية</h2>
+ <div class="card">
+  <span class="pill">مرحباً بك</span>
+  <h2>تابع عالم كرة القدم!</h2>
+  <p class="muted">نتائج المباريات، التشكيلات، ترتيب الدوريات وآخر الأخبار.</p>
+ </div>
+ <div class="card">
+  <h3>المباريات</h3>
+  <p class="muted">تابع المباريات والنتائج من قسم المباريات.</p>
+  <button onclick="go('matches')" class="pill">عرض المباريات ←</button>
+ </div>
+ <div class="card">
+  <h3>الدوريات</h3>
+  <p class="muted">اكتشف أشهر البطولات الأوروبية والعالمية.</p>
+  <button onclick="go('leagues')" class="pill">عرض الدوريات ←</button>
+ </div>
+ <div class="card">
+  <h3>الأخبار</h3>
+  <p class="muted">تابع أخبار كرة القدم والانتقالات.</p>
+  <button onclick="go('news')" class="pill">عرض الأخبار ←</button>
+ </div>
+</section>
+
+<section id="matches" class="hidden">
+ <h2>المباريات والنتائج</h2>
+ <input class="search" placeholder="ابحث عن فريق..." oninput="searchTeams(this.value)">
+ <div class="card">
+  <h3>مباريات كرة القدم</h3>
+  <p class="muted">سيتم عرض المباريات المباشرة والنتائج والمواعيد بعد ربط التطبيق بمصدر بيانات رياضي.</p>
+  <span class="pill">البيانات المباشرة قيد الربط</span>
+ </div>
+ <div id="searchResult" class="muted"></div>
+</section>
+
+<section id="leagues" class="hidden">
+ <h2>الدوريات والبطولات</h2>
+ <div class="card">
+  <h3>اختر الدوري</h3>
+  <select id="league" onchange="leagueInfo()">
+   <option value="">اختر بطولة</option>
+   <option>الدوري الإنجليزي الممتاز</option>
+   <option>الدوري الإسباني</option>
+   <option>الدوري الإيطالي</option>
+   <option>الدوري الألماني</option>
+   <option>الدوري الفرنسي</option>
+   <option>دوري أبطال أوروبا</option>
+   <option>الدوري العراقي</option>
+   <option>الدوري السعودي</option>
+   <option>الدوري المصري</option>
+   <option>كأس العالم</option>
+  </select>
+  <p id="leagueInfo" class="muted">اختر بطولة لعرض معلوماتها.</p>
+ </div>
+</section>
+
+<section id="table" class="hidden">
+ <h2>ترتيب الدوريات</h2>
+ <div class="card">
+  <p class="muted">سيظهر ترتيب الفرق والنقاط وعدد المباريات والانتصارات والتعادلات والخسائر والأهداف بعد ربط مصدر البيانات.</p>
+  <span class="pill">بانتظار البيانات</span>
+ </div>
+</section>
+
+<section id="news" class="hidden">
+ <h2>آخر أخبار كرة القدم</h2>
+ <div class="card">
+  <p class="muted">سيتم عرض أخبار الأندية واللاعبين والانتقالات من مصدر أخبار رياضي بعد ربط الخدمة.</p>
+  <span class="pill">الأخبار قيد الربط</span>
+ </div>
+</section>
+
+<section id="teams" class="hidden">
+ <h2>المنتخبات الوطنية</h2>
+ <div class="card">
+  <h3>منتخبات العالم</h3>
+  <p class="muted">العراق، البرازيل، الأرجنتين، فرنسا، إسبانيا، ألمانيا، إنجلترا، البرتغال وغيرها.</p>
+  <p class="muted">سيتم إضافة جداول المباريات والنتائج والتشكيلات بعد ربط البيانات.</p>
+ </div>
+</section>
+</main>
+
+<footer>عالم الرياضة سبورت © 2026</footer>
+
+<script>
+function showPage(id,btn){
+ document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
+ document.getElementById(id).classList.remove('hidden');
+ document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+ if(btn) btn.classList.add('active');
+ window.scrollTo(0,0);
+}
+function go(id){
+ const buttons=[...document.querySelectorAll('nav button')];
+ const index={home:0,matches:1,leagues:2,table:3,news:4,teams:5}[id];
+ showPage(id,buttons[index]);
+}
+function leagueInfo(){
+ const v=document.getElementById('league').value;
+ document.getElementById('leagueInfo').textContent=
+ v ? 'اخترت '+v+'. ستظهر المباريات والترتيبات عند ربط مصدر البيانات.' : 'اختر بطولة لعرض معلوماتها.';
+}
+function searchTeams(value){
+ document.getElementById('searchResult').textContent=
+ value ? 'بحث عن: '+value+' — ستتوفر نتائج البحث بعد ربط بيانات الفرق.' : '';
+}
+</script>
+</body>
+</html>
